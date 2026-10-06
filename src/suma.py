@@ -2,6 +2,26 @@ def sumar(a: int, b: int) -> int:
     return a + b
 
 
+def calcular(a: float, operador: str, b: float) -> float:
+    if operador == "+":
+        return a + b
+    if operador == "-":
+        return a - b
+    if operador == "*":
+        return a * b
+    if operador == "/":
+        if b == 0:
+            raise ZeroDivisionError("No se puede dividir entre cero.")
+        return a / b
+    if operador == "%":
+        if b == 0:
+            raise ZeroDivisionError("No se puede calcular módulo entre cero.")
+        return a % b
+    if operador == "**":
+        return a ** b
+    raise ValueError(f"Operación no admitida: {operador}")
+
+
 def main() -> None:
     num1 = 5
     num2 = 10

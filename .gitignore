@@ -20,3 +20,7 @@ env/
 .DS_Store
 Thumbs.db
 .terminal_history.json
+db.sqlite3
+staticfiles/
+media/reportes/*
+!media/reportes/.gitkeep

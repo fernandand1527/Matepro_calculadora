@@ -1,76 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 320px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #resultado {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-      color: #111827;
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Matepro, una calculadora colorida en tres dimensiones.">
+  <meta name="theme-color" content="#c8ff58">
+  <title>Matepro | Calculadora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="card">
-    <h2>Sumar</h2>
-    <input id="num1" type="number" placeholder="Número 1" />
-    <input id="num2" type="number" placeholder="Número 2" />
-    <button onclick="sumar()">Sumar</button>
-    <div id="resultado">Resultado: </div>
-  </div>
+  <canvas id="calculator-scene" aria-hidden="true"></canvas>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Matepro, inicio"><span class="brand-mark" aria-hidden="true">M</span><span>MATEPRO<span class="brand-period">.</span></span></a>
+      <div class="topbar-meta"><span class="live-dot"></span> CALCULADORA <span class="meta-divider">/</span> 3D</div>
+    </header>
 
-  <script>
-    function sumar() {
-      const a = Number(document.getElementById("num1").value);
-      const b = Number(document.getElementById("num2").value);
-      const resultado = a + b;
-      document.getElementById("resultado").textContent = "Resultado: " + resultado;
-    }
-  </script>
+    <main id="inicio">
+      <div class="intro-row">
+        <div><p class="eyebrow">LABORATORIO NUMÉRICO <span>01—06</span></p><h1>Números<br><span>con actitud.</span></h1></div>
+        <p class="intro-note">MATEPRO<br><span>EDICIÓN INTERACTIVA</span></p>
+      </div>
+
+      <div class="workspace">
+        <section class="calculator" aria-labelledby="calculator-title">
+          <div class="section-topline"><h2 id="calculator-title">Nueva operación</h2><span class="status-pill"><span></span> LISTA</span></div>
+          <form id="calculator-form" novalidate>
+            <div class="number-fields">
+              <label for="num1"><span>PRIMER VALOR</span><input id="num1" name="num1" type="number" step="any" inputmode="decimal" placeholder="0" autocomplete="off"></label>
+              <span class="field-connector" aria-hidden="true">+</span>
+              <label for="num2"><span>SEGUNDO VALOR</span><input id="num2" name="num2" type="number" step="any" inputmode="decimal" placeholder="0" autocomplete="off"></label>
+            </div>
+            <div class="operation-heading"><span>ELIGE UNA OPERACIÓN</span><span>06 OPCIONES</span></div>
+            <div class="operation-grid" role="group" aria-label="Operaciones">
+              <button class="operation-button is-selected" type="button" data-operator="+" aria-pressed="true"><span class="operation-symbol">+</span><span class="operation-name">Sumar</span></button>
+              <button class="operation-button" type="button" data-operator="-" aria-pressed="false"><span class="operation-symbol">−</span><span class="operation-name">Restar</span></button>
+              <button class="operation-button" type="button" data-operator="*" aria-pressed="false"><span class="operation-symbol">×</span><span class="operation-name">Multiplicar</span></button>
+              <button class="operation-button" type="button" data-operator="/" aria-pressed="false"><span class="operation-symbol">÷</span><span class="operation-name">Dividir</span></button>
+              <button class="operation-button" type="button" data-operator="%" aria-pressed="false"><span class="operation-symbol">%</span><span class="operation-name">Módulo</span></button>
+              <button class="operation-button" type="button" data-operator="**" aria-pressed="false"><span class="operation-symbol">x<sup>y</sup></span><span class="operation-name">Potencia</span></button>
+            </div>
+            <button class="calculate-button" type="submit"><span>Calcular resultado</span><span aria-hidden="true">↗</span></button>
+          </form>
+        </section>
+
+        <aside class="result-panel" aria-label="Resultado e historial">
+          <div class="result-topline"><span>RESULTADO</span><span class="result-index">MP—01</span></div>
+          <p class="expression" id="expression" aria-live="polite">Esperando operación</p>
+          <output id="result" class="result-value" aria-live="polite">—</output>
+          <p class="feedback" id="feedback" role="status">Ingresa dos números para comenzar.</p>
+          <div class="result-decoration" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="history-heading"><span>ÚLTIMO CÁLCULO</span><span id="history-count">00</span></div>
+          <p class="history-entry" id="history-entry">Todavía no hay operaciones.</p>
+        </aside>
+      </div>
+
+      <footer class="page-footer"><span>HECHO PARA PENSAR EN GRANDE.</span><span>PYTHON <i>×</i> MATEPRO</span></footer>
+    </main>
+  </div>
+  <script src="calculator.js" defer></script>
+  <script type="module" src="scene.js"></script>
 </body>
 </html>

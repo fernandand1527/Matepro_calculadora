@@ -1,0 +1,1 @@
+"""Configuración del proyecto Django de la calculadora."""

@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Matepro, una calculadora colorida en tres dimensiones.">
+  <meta name="theme-color" content="#c8ff58">
+  <title>Matepro | Calculadora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+  <canvas id="calculator-scene" aria-hidden="true"></canvas>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="{% url 'inicio' %}" aria-label="Matepro, inicio"><span class="brand-mark" aria-hidden="true">M</span><span>MATEPRO<span class="brand-period">.</span></span></a>
+      <div class="topbar-meta"><span class="live-dot"></span> CALCULADORA <span class="meta-divider">/</span> 3D</div>
+    </header>
+
+    <main id="inicio">
+      <div class="intro-row">
+        <div><p class="eyebrow">LABORATORIO NUMÉRICO <span>01—06</span></p><h1>Números<br><span>con actitud.</span></h1></div>
+        <p class="intro-note">MATEPRO<br><span>EDICIÓN INTERACTIVA</span></p>
+      </div>
+
+      <div class="workspace">
+        <section class="calculator" aria-labelledby="calculator-title">
+          <div class="section-topline"><h2 id="calculator-title">Nueva operación</h2><span class="status-pill"><span></span> LISTA</span></div>
+          <form method="post">
+            {% csrf_token %}
+            <div class="number-fields">
+              <label for="num1"><span>PRIMER VALOR</span><input id="num1" name="numero_a" type="number" step="any" inputmode="decimal" placeholder="0" value="{{ numero_a }}" autocomplete="off" required></label>
+              <span class="field-connector" aria-hidden="true">+</span>
+              <label for="num2"><span>SEGUNDO VALOR</span><input id="num2" name="numero_b" type="number" step="any" inputmode="decimal" placeholder="0" value="{{ numero_b }}" autocomplete="off" required></label>
+            </div>
+            <div class="operation-heading"><span>ELIGE UNA OPERACIÓN</span><span>06 OPCIONES</span></div>
+            <div class="operation-grid" role="group" aria-label="Operaciones">
+              {% for simbolo, nombre in operadores.items %}
+              <button class="operation-button{% if operador_seleccionado == simbolo %} is-selected{% endif %}" type="submit" name="operador" value="{{ simbolo }}" aria-label="{{ nombre }}" aria-pressed="{% if operador_seleccionado == simbolo %}true{% else %}false{% endif %}"><span class="operation-symbol">{% if simbolo == "*" %}×{% elif simbolo == "/" %}÷{% elif simbolo == "-" %}−{% elif simbolo == "**" %}x<sup>y</sup>{% else %}{{ simbolo }}{% endif %}</span><span class="operation-name">{{ nombre }}</span></button>
+              {% endfor %}
+            </div>
+            <button class="calculate-button" type="submit" name="operador" value="{{ operador_seleccionado|default:'+' }}"><span>Calcular resultado</span><span aria-hidden="true">↗</span></button>
+          </form>
+        </section>
+
+        <aside class="result-panel" aria-label="Resultado e historial">
+          <div class="result-topline"><span>RESULTADO</span><span class="result-index">MP—01</span></div>
+          <p class="expression" id="expression" aria-live="polite">{{ expresion|default:"Esperando operación" }}</p>
+          <output id="result" class="result-value" aria-live="polite">{% if resultado != None %}{{ resultado }}{% else %}—{% endif %}</output>
+          {% if error %}<p class="feedback has-error" role="alert">{{ error }}</p>{% elif resultado != None %}<p class="feedback" role="status">{{ operacion }} · cálculo correcto</p>{% else %}<p class="feedback" id="feedback" role="status">Ingresa dos números para comenzar.</p>{% endif %}
+          <div class="result-decoration" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="history-heading"><span>ÚLTIMO CÁLCULO</span><span>{% if resultado != None %}01{% else %}00{% endif %}</span></div>
+          <p class="history-entry">{% if expresion and resultado != None %}{{ expresion }} = {{ resultado }}{% else %}Todavía no hay operaciones.{% endif %}</p>
+        </aside>
+      </div>
+
+      <footer class="page-footer"><span>HECHO PARA PENSAR EN GRANDE.</span><span>PYTHON <i>×</i> MATEPRO</span></footer>
+    </main>
+  </div>
+  <script type="module" src="{% static 'scene.js' %}"></script>
+</body>
+</html>
