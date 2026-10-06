@@ -106,7 +106,12 @@
       "command": "git add .",
       "timestamp": 1791304147993,
       "cwd": "c:\\INICIOPYTHON\\Clases PYTHON\\Clases RIDER\\github\\DB-P01-Fernanda-prueba"
+    },
+    {
+      "command": "git add .\ngit commit -m \"Actualizar workflow y página\"\ngit push origin HEAD",
+      "timestamp": 1791304390132,
+      "cwd": "c:\\INICIOPYTHON\\Clases PYTHON\\Clases RIDER\\github\\DB-P01-Fernanda-prueba"
     }
   ],
-  "lastUpdated": 1791304147993
+  "lastUpdated": 1791304390132
 }
