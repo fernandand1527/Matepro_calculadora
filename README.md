@@ -28,6 +28,12 @@ py manage.py runserver
 
 Abre `http://127.0.0.1:8000/`. La aplicación Django permite sumar, restar, multiplicar, dividir, calcular módulo y potencia. No uses el servidor de desarrollo para publicar en producción.
 
+## Desplegar Django en Render
+
+El archivo `render.yaml` configura un servicio web de Django en Render. En Render, elige **New + > Blueprint**, conecta este repositorio y confirma la creación del servicio. Render instalará las dependencias, recopilará los archivos estáticos, aplicará las migraciones y arrancará Gunicorn. La clave secreta se genera automáticamente y el modo de depuración queda desactivado.
+
+Este despliegue usa SQLite en el sistema de archivos del servicio, que puede reiniciarse o perderse al volver a desplegar. Es suficiente para esta calculadora, que no guarda los cálculos como datos permanentes; para conservar datos de usuarios en producción, configura una base de datos PostgreSQL administrada.
+
 ## Ejecutar el programa
 
 La función matemática también puede ejecutarse desde la carpeta raíz:
