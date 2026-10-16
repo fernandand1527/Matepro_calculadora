@@ -2,7 +2,7 @@ name: Desplegar página web
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feature/configuración-estructura"]
   workflow_dispatch:
 
 permissions:
