@@ -7,7 +7,7 @@ const expressionElement = document.querySelector("#expression");
 
 if (canvas) {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("#c8ff58");
+  scene.background = new THREE.Color("#13091c");
 
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 80);
   camera.position.set(0, 0.2, 15.5);
@@ -19,9 +19,9 @@ if (canvas) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 1.35;
 
-  scene.add(new THREE.HemisphereLight("#ffffff", "#91a95b", 2.25));
+  scene.add(new THREE.HemisphereLight("#ffd8ff", "#391447", 2.1));
 
   const keyLight = new THREE.DirectionalLight("#fff7d6", 4.2);
   keyLight.position.set(-5, 8, 10);
@@ -33,13 +33,17 @@ if (canvas) {
   keyLight.shadow.camera.bottom = -9;
   scene.add(keyLight);
 
-  const fillLight = new THREE.PointLight("#55dff2", 28, 13);
+  const fillLight = new THREE.PointLight("#00f5ff", 36, 15);
   fillLight.position.set(5, 1, 6);
   scene.add(fillLight);
 
+  const neonLight = new THREE.PointLight("#ff35d3", 30, 13);
+  neonLight.position.set(-4, 2, 5);
+  scene.add(neonLight);
+
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(80, 80),
-    new THREE.MeshStandardMaterial({ color: "#e9ffb7", roughness: 0.88 }),
+    new THREE.MeshStandardMaterial({ color: "#291632", roughness: 0.72, emissive: "#160b20", emissiveIntensity: 0.6 }),
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -3.7;
@@ -51,7 +55,7 @@ if (canvas) {
 
   const shell = new THREE.Mesh(
     new RoundedBoxGeometry(4.05, 6.05, 0.62, 8, 0.2),
-    new THREE.MeshStandardMaterial({ color: "#ff5b50", roughness: 0.28, metalness: 0.12 }),
+    new THREE.MeshStandardMaterial({ color: "#ff35d3", emissive: "#9b087d", emissiveIntensity: 0.72, roughness: 0.24, metalness: 0.18 }),
   );
   shell.castShadow = true;
   shell.receiveShadow = true;
@@ -59,7 +63,7 @@ if (canvas) {
 
   const face = new THREE.Mesh(
     new RoundedBoxGeometry(3.78, 5.76, 0.16, 8, 0.12),
-    new THREE.MeshStandardMaterial({ color: "#183c36", roughness: 0.48, metalness: 0.08 }),
+    new THREE.MeshStandardMaterial({ color: "#170d24", emissive: "#210d32", emissiveIntensity: 0.3, roughness: 0.42, metalness: 0.12 }),
   );
   face.position.z = 0.34;
   face.castShadow = true;
@@ -72,16 +76,16 @@ if (canvas) {
 
   function updateScreen() {
     if (!screenContext) return;
-    screenContext.fillStyle = "#102d2a";
+    screenContext.fillStyle = "#10091a";
     screenContext.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
-    screenContext.fillStyle = "#c8ff58";
+    screenContext.fillStyle = "#d7ff00";
     screenContext.font = "500 27px monospace";
     screenContext.fillText("MATEPRO  /  01", 34, 46);
-    screenContext.fillStyle = "#b1ccc0";
+    screenContext.fillStyle = "#00f5ff";
     screenContext.font = "400 29px monospace";
     const expression = expressionElement?.textContent?.trim() || "LISTA PARA CALCULAR";
     screenContext.fillText(expression.slice(0, 27), 34, 102);
-    screenContext.fillStyle = "#c8ff58";
+    screenContext.fillStyle = "#d7ff00";
     screenContext.font = "500 82px monospace";
     screenContext.textAlign = "right";
     const result = resultElement?.textContent?.trim() || "—";
@@ -107,8 +111,8 @@ if (canvas) {
     ["1", "2", "3", "+"],
     ["0", ".", "xʸ", "="],
   ];
-  const buttonMaterials = ["#f5f5e8", "#c8ff58", "#46d9e8", "#7064ed", "#ffbf45"];
-  const darkInk = new THREE.MeshStandardMaterial({ color: "#183c36", roughness: 0.35 });
+  const buttonMaterials = ["#f8eaff", "#d7ff00", "#00f5ff", "#9b5cff", "#ff35d3"];
+  const darkInk = new THREE.MeshStandardMaterial({ color: "#200b2d", roughness: 0.3 });
 
   function labelTexture(label, color) {
     const labelCanvas = document.createElement("canvas");
@@ -133,7 +137,7 @@ if (canvas) {
       const colorIndex = label === "=" ? 2 : ["÷", "×", "−", "+", "xʸ", "%"].includes(label) ? (rowIndex % 2 ? 3 : 2) : label === "AC" ? 4 : 0;
       const button = new THREE.Mesh(
         new RoundedBoxGeometry(0.75, 0.65, 0.2, 4, 0.1),
-        new THREE.MeshStandardMaterial({ color: buttonMaterials[colorIndex], roughness: 0.32, metalness: 0.04 }),
+        new THREE.MeshStandardMaterial({ color: buttonMaterials[colorIndex], emissive: buttonMaterials[colorIndex], emissiveIntensity: 0.2, roughness: 0.26, metalness: 0.08 }),
       );
       button.position.set(columnX, rowY, 0.46);
       button.castShadow = true;
@@ -152,7 +156,7 @@ if (canvas) {
 
   const accentRing = new THREE.Mesh(
     new THREE.TorusGeometry(0.78, 0.075, 16, 80),
-    new THREE.MeshStandardMaterial({ color: "#7064ed", roughness: 0.3, metalness: 0.24 }),
+    new THREE.MeshStandardMaterial({ color: "#00f5ff", emissive: "#00c8e8", emissiveIntensity: 0.72, roughness: 0.22, metalness: 0.32 }),
   );
   accentRing.position.set(2.4, 1.45, -0.9);
   accentRing.rotation.set(0.45, 0.2, -0.5);
@@ -161,7 +165,7 @@ if (canvas) {
 
   const marker = new THREE.Mesh(
     new THREE.IcosahedronGeometry(0.34, 0),
-    new THREE.MeshStandardMaterial({ color: "#46d9e8", roughness: 0.25, metalness: 0.1, flatShading: true }),
+    new THREE.MeshStandardMaterial({ color: "#d7ff00", emissive: "#8fc400", emissiveIntensity: 0.6, roughness: 0.2, metalness: 0.12, flatShading: true }),
   );
   marker.position.set(-2.45, -1.85, 0.2);
   marker.rotation.set(0.4, 0.4, 0.2);

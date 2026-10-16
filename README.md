@@ -1,5 +1,7 @@
 # Calculadora en Python y Django
 
+[![Ver calculadora en la nube](https://img.shields.io/badge/Ver%20calculadora-En%20la%20nube-f45b72?style=for-the-badge)](https://fernandand1527.github.io/Matepro_calculadora/)
+
 Calculadora web con operaciones básicas. Incluye una versión estática para GitHub Pages y una aplicación Django para ejecutar localmente.
 
 ## Requisitos
@@ -24,7 +26,7 @@ Inicia el servidor de desarrollo:
 py manage.py runserver
 ```
 
-Abre `http://127.0.0.1:8000/`. La aplicación Django permite sumar, restar, multiplicar y dividir. No uses el servidor de desarrollo para publicar en producción.
+Abre `http://127.0.0.1:8000/`. La aplicación Django permite sumar, restar, multiplicar, dividir, calcular módulo y potencia. No uses el servidor de desarrollo para publicar en producción.
 
 ## Ejecutar el programa
 
@@ -34,9 +36,9 @@ La función matemática también puede ejecutarse desde la carpeta raíz:
 python src/suma.py
 ```
 
-## Versión estática para GitHub Pages
+## Versión estática en la nube
 
-Abre `web/index.html` en el navegador. Esta versión estática se publica en GitHub Pages; GitHub Pages no ejecuta Django ni código Python del servidor.
+El botón **Ver calculadora en la nube** abre la versión estática publicada en GitHub Pages. El flujo de GitHub Actions publica automáticamente el contenido de `web/` cuando los cambios llegan a la rama `main`; espera a que la acción **Desplegar página web** termine correctamente. GitHub Pages no ejecuta Django ni código Python del servidor. Para probar sin conexión, abre `web/index.html` en el navegador o sírvelo localmente.
 
 ## Ejecutar las pruebas
 
