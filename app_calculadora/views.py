@@ -2,6 +2,7 @@ import math
 
 from django.shortcuts import render
 
+from app_calculadora.models import Calculation
 from src.suma import calcular
 
 
@@ -24,6 +25,8 @@ def inicio(request):
         "numero_b": "",
         "resultado": None,
         "operador_seleccionado": "+",
+        "historial": Calculation.objects.all()[:5],
+        "historial_total": Calculation.objects.count(),
     }
 
     if request.method == "POST":
@@ -52,6 +55,14 @@ def inicio(request):
                 contexto["expresion"] = (
                     f"{numero_a} {SIMBOLOS.get(operador, operador)} {numero_b}"
                 )
+                Calculation.objects.create(
+                    first_value=valor_a,
+                    second_value=valor_b,
+                    operator=operador,
+                    result=float(resultado),
+                )
+                contexto["historial"] = Calculation.objects.all()[:5]
+                contexto["historial_total"] = Calculation.objects.count()
             except ZeroDivisionError:
                 contexto["error"] = "No se puede dividir entre cero."
             except (ValueError, OverflowError):

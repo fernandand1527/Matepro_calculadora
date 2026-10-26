@@ -53,8 +53,12 @@
           <output id="result" class="result-value" aria-live="polite">{% if resultado != None %}{{ resultado }}{% else %}—{% endif %}</output>
           {% if error %}<p class="feedback has-error" role="alert">{{ error }}</p>{% elif resultado != None %}<p class="feedback" role="status">{{ operacion }} · cálculo correcto</p>{% else %}<p class="feedback" id="feedback" role="status">Ingresa dos números para comenzar.</p>{% endif %}
           <div class="result-decoration" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="history-heading"><span>ÚLTIMO CÁLCULO</span><span>{% if resultado != None %}01{% else %}00{% endif %}</span></div>
-          <p class="history-entry">{% if expresion and resultado != None %}{{ expresion }} = {{ resultado }}{% else %}Todavía no hay operaciones.{% endif %}</p>
+          <div class="history-heading"><span>HISTORIAL RECIENTE</span><span>{{ historial_total|stringformat:"02d" }}</span></div>
+          {% for calculation in historial %}
+          <p class="history-entry">{{ calculation.first_value }} {{ calculation.operator }} {{ calculation.second_value }} = {{ calculation.result }}</p>
+          {% empty %}
+          <p class="history-entry">Todavía no hay operaciones.</p>
+          {% endfor %}
         </aside>
       </div>
 
