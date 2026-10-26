@@ -32,6 +32,15 @@ Abre `http://127.0.0.1:8000/`. La aplicación Django permite sumar, restar, mult
 
 El archivo `render.yaml` configura un servicio web de Django en Render. En Render, elige **New + > Blueprint**, conecta este repositorio y confirma la creación del servicio. Render instalará las dependencias, recopilará los archivos estáticos, aplicará las migraciones y arrancará Gunicorn. La clave secreta se genera automáticamente y el modo de depuración queda desactivado.
 
+El historial de cálculos se guarda en PostgreSQL mediante `DATABASE_URL` (por ejemplo, Neon). La ruta `/monitor/` comprueba las conexiones configuradas sin mostrar credenciales. SQLite se comprueba como archivo local o temporal y no es persistente en el sistema gratuito de Render.
+
+Para habilitar las comprobaciones reales de MongoDB Atlas y MySQL, configura estas variables privadas en el servicio de Render:
+
+- `MONGODB_URI`: URI de conexión de MongoDB Atlas.
+- `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD` y `MYSQL_DATABASE`: datos de una instancia MySQL alcanzable desde Render. `MYSQL_PORT` es opcional y usa `3306` por defecto.
+
+No guardes credenciales en GitHub. La página solo indica “Conectada” después de un ping real. Aunque MongoDB y MySQL queden conectados, el historial de la calculadora continúa almacenándose únicamente en PostgreSQL hasta que se desarrollen funciones que usen esos motores.
+
 Este despliegue usa SQLite en el sistema de archivos del servicio, que puede reiniciarse o perderse al volver a desplegar. Es suficiente para esta calculadora, que no guarda los cálculos como datos permanentes; para conservar datos de usuarios en producción, configura una base de datos PostgreSQL administrada.
 
 ## Ejecutar el programa

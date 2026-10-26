@@ -1,0 +1,44 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Estado de las conexiones de bases de datos de Matepro.">
+  <title>Matepro | Monitor de bases de datos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body class="monitor-page">
+  <main class="monitor-shell">
+    <header class="monitor-topbar">
+      <a class="brand" href="{% url 'inicio' %}"><span class="brand-mark" aria-hidden="true">M</span><span>MATEPRO<span class="brand-period">.</span></span></a>
+      <a class="monitor-back" href="{% url 'inicio' %}">Volver a la calculadora <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="monitor-intro" aria-labelledby="monitor-title">
+      <p class="eyebrow">INFRAESTRUCTURA / ESTADO EN VIVO</p>
+      <h1 id="monitor-title">Bases de datos<span>.</span></h1>
+      <p>Comprobación directa de conectividad desde el servidor.</p>
+    </section>
+
+    <section class="database-grid" aria-label="Estado de conexiones">
+      {% for database in databases %}
+      <article class="database-card state-{{ database.state }}">
+        <div class="database-card-top">
+          <span class="database-icon" aria-hidden="true">{% if "SQLite" in database.name %}▤{% elif "PostgreSQL" in database.name %}◉{% elif "MongoDB" in database.name %}⬡{% else %}▦{% endif %}</span>
+          <span class="database-state"><span></span>{% if database.state == "connected" %}Conectada{% elif database.state == "error" %}Error{% else %}Sin configurar{% endif %}</span>
+        </div>
+        <h2>{{ database.name }}</h2>
+        <p class="database-kind">{{ database.kind }}</p>
+        <p class="database-detail">{{ database.detail }}</p>
+      </article>
+      {% endfor %}
+    </section>
+
+    <footer class="monitor-footer"><span>Las credenciales se leen desde variables de entorno.</span><span>NEON · ATLAS · MYSQL · SQLITE</span></footer>
+  </main>
+</body>
+</html>

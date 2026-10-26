@@ -11,6 +11,15 @@ class CalculadoraTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Nueva operación")
 
+    def test_panel_monitor_muestra_las_cuatro_bases(self):
+        response = self.client.get(reverse("monitor"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "SQLite")
+        self.assertContains(response, "PostgreSQL · Neon")
+        self.assertContains(response, "MongoDB Atlas")
+        self.assertContains(response, "MySQL")
+
     def test_suma_dos_numeros(self):
         response = self.client.post(
             reverse("inicio"),
