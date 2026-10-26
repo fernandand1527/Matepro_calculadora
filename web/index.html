@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -58,10 +59,43 @@
         </aside>
       </div>
 
+      <section class="media-workspace" aria-label="Multimedia y ubicación">
+        <div class="video-section">
+          <div class="media-heading"><span>VIDEO</span><span>MATEPRO / DEMOSTRACIÓN</span></div>
+          <div class="video-frame">
+            <video controls preload="metadata" playsinline aria-label="Video principal de Matepro">
+              <source src="video/bailandobachata.mp4" type="video/mp4">
+              Tu navegador no puede reproducir este video.
+            </video>
+          </div>
+        </div>
+        <div class="media-controls">
+          <div class="media-heading"><span>AMBIENTE</span><span>AUDIO</span></div>
+          <p class="media-copy">Reproduce o pausa la música ambiental.</p>
+          <div class="music-player">
+           <audio controls loop>
+          <source src="audio/bachata.mp3" type="audio/mpeg">
+          Tu navegador no soporta el reproductor de audio.
+          </audio>
+          </div>
+          <div class="location-block">
+            <div class="media-heading"><span>UBICACIÓN</span><span>OPCIONAL</span></div>
+            <p class="media-copy">Solo se consulta si pulsas el botón. No guardamos tus coordenadas.</p>
+            <button class="media-button location-button" id="location-button" type="button"><span aria-hidden="true">⌖</span><span>Compartir ubicación</span></button>
+            <p class="location-status" id="location-status" role="status" aria-live="polite">Ubicación no compartida.</p>
+            <div class="location-map" id="location-map" aria-label="Mapa de la ubicación compartida" hidden></div>
+            <a class="map-link" id="map-link" target="_blank" rel="noopener noreferrer" hidden>Abrir ubicación en OpenStreetMap ↗</a>
+            <p class="map-privacy">OpenStreetMap recibe solicitudes para mostrar las teselas del mapa de esta zona. La aplicación no guarda tus coordenadas.</p>
+          </div>
+        </div>
+      </section>
+
       <footer class="page-footer"><span>HECHO PARA PENSAR EN GRANDE.</span><span>PYTHON <i>×</i> MATEPRO</span></footer>
     </main>
   </div>
   <script src="calculator.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="media.js" defer></script>
   <script type="module" src="scene.js"></script>
 </body>
 </html>
